@@ -6,6 +6,10 @@
 using std::vector;
 using std::string;
 
+#pragma region definitions
+
+
+
 
     const string availableStats[6] = {
         "STRENGTH",
@@ -77,7 +81,7 @@ using std::string;
         2, //charm
     };
 
-
+#pragma endregion
 
 
 
@@ -210,7 +214,8 @@ int main()
         // --- Name --- //
         while (true) {
             std::cout << "\n Name:\t";
-            getline(std::cin, nameTemp);
+            
+            std::getline(std::cin, nameTemp);
             if (nameTemp != "" && nameTemp.size() < 10) {
                 break;
             }
@@ -232,7 +237,7 @@ int main()
             
             std::cout << "\nInput your race:    ";
 
-            getline(std::cin, raceTemp);
+            std::cin >> raceTemp;
 
             if (raceTemp == "") {
                 std::cout << "Please input a valid Race" << std::endl;
@@ -256,7 +261,7 @@ int main()
         // --- Class --- //
         bool validClass = false;
 
-        std::cout << "\nClass:\n\n";
+        std::cout << "\nChoose your class:\n\n";
         for (int c = 0; c < std::size(availableClasses); c++) {
             std::cout << availableClasses[c] << std::endl;
         }
@@ -266,7 +271,7 @@ int main()
             
             std::cout << "\nInput your class:    ";
 
-            getline(std::cin, classTemp);
+            std::cin >> classTemp;
             
 
             if (classTemp == "") {
