@@ -190,10 +190,6 @@ private:
 
 
 
-void setStat(Player& inPlayer, int statIndex);
-
-
-
 
 int main()
 {
@@ -215,7 +211,8 @@ int main()
         while (true) {
             std::cout << "\n Name:\t";
             
-            std::getline(std::cin, nameTemp);
+            //std::getline(std::cin, nameTemp); // this line was being weird on the second time the program loops
+            std::cin >> nameTemp;
             if (nameTemp != "" && nameTemp.size() < 10) {
                 break;
             }
@@ -275,7 +272,7 @@ int main()
             
 
             if (classTemp == "") {
-                std::cout << "Please input a valid Class" << std::endl;
+                std::cout << "Please input a valid class" << std::endl;
                 continue;
             }
 
@@ -287,7 +284,7 @@ int main()
             }
 
             if (validClass == false) {
-                std::cout << "Please input a valid Class" << std::endl;
+                std::cout << "Please input a valid class" << std::endl;
             }
 
 
@@ -295,13 +292,37 @@ int main()
 
         std::cout << "\n";
 
-
+        //--create player---//
         Player player(nameTemp, raceTemp, classTemp);
 
         
-        //--- player stats ---//
+        //--- get player stats ---//
         for (int c = 0; c < std::size(availableStats); c++) {
-            setStat(player, c);
+            int level = 0;
+
+            while (true) {
+
+                std::cout << "Input your " << player.getStat(c).getStatType() << " stat:";
+                std::cin >> level;
+
+                while (!std::cin.good()) {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                    std::cout << "\nInvalid Input.\n Input your " << player.getStat(c).getStatType() << " stat:";
+                    std::cin >> level;
+
+                }
+
+                if (level <= 18 && level >= 8) {
+                    break;
+                }
+
+                std::cout << "\nLevel must be between 8-18.\n";
+
+            }
+
+            player.setStat(c, level);
         }
 
         //---final output---//
@@ -311,7 +332,7 @@ int main()
 
         std::cout << "\n" << std::endl;
 
-        //ask for new character
+        //creat new character?
         string response = "";
         while (true) {
             std::cout << "create another character? y/n" << std::endl;
@@ -331,33 +352,4 @@ int main()
         system("CLS");
 
     }
-}
-
-void setStat(Player& inPlayer, int statIndex) {
-    int level = 0;
-
-    while (true) {
-
-        std::cout << "Input your " << inPlayer.getStat(statIndex).getStatType() << " stat:";
-        std::cin >> level;
-
-        while (!std::cin.good()) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-            std::cout << "\nInvalid Input.\n Input your " << inPlayer.getStat(statIndex).getStatType() << " stat:";
-            std::cin >> level;
-
-        }
-
-        if (level <= 18 && level >= 8) {
-            break;
-        }
-
-        std::cout << "\nLevel must be between 8-18.\n";
-
-    }
-
-    inPlayer.setStat(statIndex, level);
-    
 }
