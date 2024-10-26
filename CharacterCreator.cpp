@@ -152,10 +152,10 @@ public:
         std::cout << title << std::endl;
         std::cout << string(title.size(), '-') << "\n" << std::endl;
 
-        int spaces = 16;
+
         for (int c = 0; c < std::end(mBaseStats) - std::begin(mBaseStats); c++) {
 
-            string toPrint = mBaseStats[c].getStatType() + ":" + string(spaces - mBaseStats[c].getStatType().length() + 1, ' ') + std::to_string(mBaseStats[c].getLevel() + mStatBonuses[c]) ;
+            string toPrint = mBaseStats[c].getStatType() + ":" + string(16 - mBaseStats[c].getStatType().length() + 1, ' ') + std::to_string(mBaseStats[c].getLevel() + mStatBonuses[c]) ;
             std::cout << toPrint << std::endl;
         }
     }
@@ -189,7 +189,13 @@ private:
 
 };
 
+
+
+
 void printRaceBonuses(const int raceStats[]);
+
+
+
 
 
 int main()
@@ -288,7 +294,7 @@ int main()
         while (!validClass) {
 
             
-            std::cout << "\nInput your class:    ";
+            std::cout << "\nInput your class:   ";
 
             std::cin >> classTemp;
             
@@ -311,8 +317,8 @@ int main()
 
 
         }
-
         std::cout << "\n";
+
 
         //--- create player object ---//
         Player player(nameTemp, raceTemp, classTemp);
@@ -321,17 +327,17 @@ int main()
         //--- get player stats ---//
         for (int c = 0; c < numberOfStats; c++) {
             int level = 0;
-
+            int StatInputSpace = 15;
             while (true) {
 
-                std::cout << "Input your " << player.getStat(c).getStatType() << " stat:";
+                std::cout << "Input your " << player.getStat(c).getStatType() << " stat:" << string(StatInputSpace - player.getStat(c).getStatType().length(), ' ');
                 std::cin >> level;
 
                 while (!std::cin.good()) {
                     std::cin.clear();
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                    std::cout << "\nInvalid Input.\n Input your " << player.getStat(c).getStatType() << " stat:";
+                    std::cout << "\nInvalid Input.\n Input your " << player.getStat(c).getStatType() << " stat:" << string(StatInputSpace- player.getStat(c).getStatType().length(), ' ');
                     std::cin >> level;
 
                 }
@@ -354,7 +360,7 @@ int main()
 
         std::cout << "\n" << std::endl;
 
-        //creat new character?
+        //create new character prompt
         string response = "";
         while (true) {
             std::cout << "create another character? y/n" << std::endl;
