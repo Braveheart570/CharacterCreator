@@ -8,10 +8,11 @@ using std::string;
 
 #pragma region definitions
 
+/* this variable exists because I can't find 
+a way to get the size of a const int array.*/
+const int numberOfStats = 6; 
 
-
-
-    const string availableStats[6] = {
+    const string availableStats[numberOfStats] = {
         "STRENGTH",
         "DEXTERITY",
         "CONSTITUTION",
@@ -188,7 +189,7 @@ private:
 
 };
 
-
+void printRaceBonuses(const int raceStats[]);
 
 
 int main()
@@ -226,7 +227,28 @@ int main()
 
         std::cout << "\nChoose your race:\n\n";
         for (int c = 0; c < std::size(availableRaces); c++) {
-            std::cout << availableRaces[c] << std::endl;
+            std::cout << availableRaces[c] << string(20-availableRaces[c].length(), ' ');
+            //get related race atributes
+            switch (c) {
+            case 0:
+                printRaceBonuses(humanStats);
+                break;
+            case 1:
+                printRaceBonuses(dwarfStats);
+                break;
+            case 2:
+                printRaceBonuses(elfStats);
+                break;
+            case 3:
+                printRaceBonuses(orcStats);
+                break;
+            case 4:
+                printRaceBonuses(halflingStats);
+                break;
+            }
+            std::cout << "\n";
+            
+
         }
 
         while (!validRace) {
@@ -292,12 +314,12 @@ int main()
 
         std::cout << "\n";
 
-        //--create player---//
+        //--- create player object ---//
         Player player(nameTemp, raceTemp, classTemp);
 
         
         //--- get player stats ---//
-        for (int c = 0; c < std::size(availableStats); c++) {
+        for (int c = 0; c < numberOfStats; c++) {
             int level = 0;
 
             while (true) {
@@ -350,6 +372,19 @@ int main()
         }
 
         system("CLS");
+
+    }
+}
+
+void printRaceBonuses(const int raceStats[]) {
+
+    for (int c = 0; c < numberOfStats; c++) {
+        if (raceStats[c] == 0) {
+            continue;
+        }
+
+        std::cout << availableStats[c] << " +" << raceStats[c] << string(16 - availableStats[c].length(), ' ');
+
 
     }
 }
